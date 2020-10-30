@@ -1,25 +1,29 @@
 package com.jvvladimir.ahomework1.model
 
-class NumericHolder(
-    val rule: (Int) -> Boolean
-) {
+class NumericRepository private constructor() {
+
+    companion object {
+        val instance by lazy { NumericRepository() }
+    }
 
     val numerics = mutableListOf<Numeric>()
 
     init {
-        generateNumerics { it % 2 == 0 }
+        generateNumerics()
     }
 
     fun generateOneMore() {
-        if (rule(numerics.size))
+        if (numerics.size % 2 == 0)
             numerics.add(Numeric(numerics.size, Color.RED))
         else
             numerics.add(Numeric(numerics.size, Color.BLUE))
     }
 
-    private fun generateNumerics(n: Int = 100, rule: (Int) -> Boolean): MutableList<Numeric> {
+    fun getNumeric(ind: Int?) = if (ind == null) null else numerics[ind]
+
+    private fun generateNumerics(n: Int = 100): MutableList<Numeric> {
         for (i in 0..n) {
-            if (rule(i))
+            if (i % 2 == 0)
                 numerics.add(Numeric(i, Color.RED))
             else
                 numerics.add(Numeric(i, Color.BLUE))

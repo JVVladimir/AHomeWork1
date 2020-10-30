@@ -1,16 +1,24 @@
-package com.jvvladimir.ahomework1
+package com.jvvladimir.ahomework1.view
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.jvvladimir.ahomework1.R
 import com.jvvladimir.ahomework1.model.Color
 import com.jvvladimir.ahomework1.model.Numeric
 
-class NumericViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class NumericViewHolder(itemView: View, private val listener: IListener) : RecyclerView.ViewHolder(itemView) {
+
+    interface IListener {
+        fun onNumericClicked(position: Int)
+    }
+
+    init {
+        itemView.setOnClickListener {
+            listener.onNumericClicked(adapterPosition)
+        }
+    }
 
     private val name = itemView.findViewById<TextView>(R.id.name)
     private val image = itemView.findViewById<ImageView>(R.id.image)
